@@ -5,7 +5,7 @@
 ARG GO_VER
 ARG ALPINE_VER
 FROM golang:${GO_VER}-alpine${ALPINE_VER} as golang
-
+RUN set -eux && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 RUN apk add --no-cache \
 	bash \
 	gcc \
@@ -20,6 +20,7 @@ FROM golang as tools
 RUN make configtxgen configtxlator cryptogen peer discover idemixgen
 
 FROM golang:${GO_VER}-alpine
+RUN set -eux && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 # git is required to support `go list -m`
 RUN apk add --no-cache \
 	bash \

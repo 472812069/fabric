@@ -5,6 +5,7 @@
 ARG GO_VER
 ARG ALPINE_VER
 FROM golang:${GO_VER}-alpine${ALPINE_VER}
+RUN set -eux && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 RUN apk add --no-cache \
 	g++ \
 	gcc \
